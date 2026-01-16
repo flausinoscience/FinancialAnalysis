@@ -1,14 +1,23 @@
-import io, csv, random, math
+import io, csv, random, math, os
 from uuid import uuid4
 from psycopg2 import connect
 from psycopg2.extras import execute_values
 from datetime import datetime, timedelta
 from faker import Faker
+from dotenv import load_dotenv
 
-N_CUSTOMERS = 10
-N_MARKET_PRICES = 10
+load_dotenv()
 
-DNS = 'host=localhost dbname=Enterprise user=user password=pass'
+N_CUSTOMERS = 100
+N_MARKET_PRICES = 100_000
+N_TRADES = 150_000
+
+DNS_STRING = (
+    f'host={os.getenv('DB_HOST')} '
+    f'dbname={os.getenv('DB_NAME')} '
+    f'user={os.getenv('DB_USER')} '
+    f'password={os.getenv('DB_PASSWORD')}'
+)
 fake = Faker()
 Faker.seed()
 random.seed()
@@ -104,7 +113,7 @@ def gen_customers(n):
         email = f'user{i+1}@enterprise.fake'
         first_name = fake.first_name()
         surname = fake.last_name()
-        sign_up_at = (NOW - timedelta(days=random.randint(0, 365 * 10))).isoformat()
+        sign_up_at = (NOW - timedelta(days=random.randint(0, 365 * 3))).isoformat()
         country = random.choice(COUNTRIES)
         age = random.randint(18, 70)
         birth_date = (NOW.date() - timedelta(days=365*age)).isoformat()
@@ -246,7 +255,7 @@ def copy_stream(conn, table, columns, rows):
         
 
 if __name__ == '__main__':
-    conn = connect(DNS)
+    conn = connect(DNS_STRING)
 
     try:
         print('----------------->\nGenerating customers...')
