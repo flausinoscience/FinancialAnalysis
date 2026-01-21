@@ -1,4 +1,14 @@
-COUNTRIES = ['US','GB','DE','FR','BR','CA','AU','IN']
+COUNTRY_WEIGHTS = {
+    'US': 0.30,
+    'BR': 0.17,
+    'IN': 0.13,
+    'GB': 0.12,
+    'DE': 0.10,
+    'FR': 0.08,
+    'CA': 0.06,
+    'AU': 0.04
+}
+
 
 RISK_PROFILES = [
     1, # conservative 
