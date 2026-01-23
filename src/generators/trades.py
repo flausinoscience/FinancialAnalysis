@@ -120,6 +120,29 @@ def gen_trades(customers, accounts, assets, asset_price_history):
             quantity = round(random.uniform(1, 50), 4)
             commission = round(price * quantity * 0.001, 4)
 
+            flagged = False
+            flag_reason = None
+
+            # Rule 1: conservative profile trading crypto
+            if (
+                risk_profile_id == RISK_PROFILES['conservative']
+                and asset_id in assets_id_by_type[ASSET_TYPES['crypto']]
+            ):
+                flagged = True
+                flag_reason = "CONSERVATIVE_TRADING_CRYPTO"
+
+            # Rule 2: unusually large trade size
+            trade_value = price * quantity
+            if trade_value > 10_000:
+                flagged = True
+                flag_reason = "LARGE_TRADE"
+
+            # Rule 3: excessive activity in short period 
+            if random.random() < 0.01:  # 1% behavioral anomaly
+                flagged = True
+                flag_reason = "ABNORMAL_FREQUENCY"
+
+
             yield (
                 str(uuid4()),
                 asset_id,
@@ -129,8 +152,8 @@ def gen_trades(customers, accounts, assets, asset_price_history):
                 round(price, 6),
                 traded_at.isoformat(),
                 commission,
-                False,
-                None,
+                flagged,
+                flag_reason,
                 NOW.isoformat(),
                 NOW.isoformat()
             )

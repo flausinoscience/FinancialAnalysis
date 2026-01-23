@@ -5,7 +5,8 @@ from ..generators import (
     gen_assets,
     gen_market_prices,
     asset_price_history,
-    gen_trades
+    gen_trades,
+    gen_positions
 )
 from ..db.connection import get_engine, q
 from ..db.ingestion import batch_insert, run_sql_file, copy_stream
@@ -60,5 +61,19 @@ def run():
                 'created_at','updated_at'
     ), trades)
 
+    print('----------------->\nGenerating positions...')
+    positions = gen_positions(q)
+    copy_stream(engine, 'Position', (
+        'id',
+        'account_id',
+        'asset_id',
+        'quantity',
+        'avg_price',
+        'created_at',
+        'updated_at'
+    ), positions)
+
+
 if __name__ == '__main__':
     run() 
+    
