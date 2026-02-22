@@ -13,8 +13,8 @@ from ..db.ingestion import batch_insert, run_sql_file, copy_stream
 
 BASE_DIR = Path(__file__).resolve().parents[2]  # project root
 SQL_PATH = BASE_DIR / 'src/generators' / 'base_inserts.sql'
-N_CUSTOMERS = 100
-YEARS_OF_MARKET_PRICES = 7
+N_CUSTOMERS = 10_000
+YEARS_OF_MARKET_PRICES = 10
 
 def run():
     engine = get_engine()
