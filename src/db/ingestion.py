@@ -26,7 +26,7 @@ def batch_insert(engine, table, columns, rows, batch_size=2000):
 
 
 def run_sql_file(engine, path):
-    with open(path, "r", encoding="utf-8") as f:
+    with open(path, 'r', encoding='utf-8') as f:
         sql = f.read()
 
     with engine.begin() as conn:
