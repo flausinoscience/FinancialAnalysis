@@ -116,3 +116,21 @@ CREATE TABLE IF NOT EXISTS staging.market_price(
 
     _loaded_at TIMESTAMP DEFAULT NOW()
 );
+
+CREATE TABLE IF NOT EXISTS staging.account_pre_dimension(
+    account_id UUID PRIMARY KEY,
+    account_type VARCHAR(45),
+    account_status VARCHAR(45),
+    account_country VARCHAR(45),
+    currency CHAR(3),
+    opened_at TIMESTAMP,
+    owner_email VARCHAR(255) NOT NULL,
+    owner_first_name VARCHAR(255),
+    owner_last_name VARCHAR(255),
+    owner_country VARCHAR(255),
+    owner_birth_date DATE,
+    owner_sign_up_at TIMESTAMP,
+
+    hash_diff TEXT UNIQUE NOT NULL,
+    _loaded_at TIMESTAMP DEFAULT NOW()
+);

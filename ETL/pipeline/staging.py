@@ -48,7 +48,8 @@ if __name__ == '__main__':
         'load_market_prices.sql',
         'load_positions.sql',
         'load_trade_types.sql',
-        'load_trades.sql'
+        'load_trades.sql',
+        'load_account_pre_dimension.sql'
     ]
     for file_to_load in load_files:
         run_sql_file(engine, path / file_to_load)
