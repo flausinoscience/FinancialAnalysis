@@ -16,9 +16,11 @@ CREATE TABLE IF NOT EXISTS dw.dim_account(
     owner_birth_date DATE,
     owner_sign_up_at TIMESTAMP,
 
+    hash_diff TEXT NOT NULL,
     valid_from TIMESTAMP NOT NULL,
     valid_to TIMESTAMP,
-    is_current BOOLEAN NOT NULL
+    is_current BOOLEAN NOT NULL,
+    deleted_at TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS dw.dim_brokerage(
